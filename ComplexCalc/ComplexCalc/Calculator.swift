@@ -38,7 +38,10 @@ class Calculator {
     }
 
     public func multiply(_ arg: [Int]) -> Int {
-        var sum = 1
+        if (arg.count == 0) {
+            return 0
+        }
+        var sum = arg[0]
         for num in arg {
             sum *= num
         }
@@ -53,11 +56,19 @@ class Calculator {
         return add(args) / args.count
     }
     
-    func mathOp(op: (Int, Int) -> Int, firstNum: Int, secondNum: Int) -> Int {
-        return op(firstNum, secondNum)
+    public func mathOp(lhs: Int, rhs: Int, op: (Int, Int) -> Int) -> Int {
+        return op(lhs, rhs)
     }
 
-
+    public func mathOp(args:[Int], beg: Int, op: (Int, Int) -> Int) -> Int {
+        var sum = beg
+        let size = args.count - 1 // one too much without -1
+        for num in 0...size {
+            sum = op(sum, args[num])
+        }
+        return sum
+    }
+        
     // Points: tuples to create pairs
     public func add(lhs: (Int, Int), rhs: (Int, Int)) -> (Int, Int) {
         return (lhs.0 + rhs.0, lhs.1 + rhs.1)
